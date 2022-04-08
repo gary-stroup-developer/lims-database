@@ -1,24 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route
+} from "react-router-dom";
+
+
+import TissueCulture from "./TissueCulture";
+import StemCells from "./StemCells";
+import FpqLog from "./FpqLog";
+import DashBoard from "./Dashboard";
 
 function App() {
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/lims-database" element={<DashBoard />} />
+        <Route path="/lims-database/tissue-culture" element={<TissueCulture />} />
+        <Route path="/lims-database/stem-cells" element={<StemCells />} />
+        <Route path="/lims-database/fpq-log" element={<FpqLog />} />
+      </Routes>
+  </Router>
   );
 }
 
