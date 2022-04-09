@@ -7,27 +7,28 @@
   import boss from './assets/images/boss.jpg';
   import man from './assets/images/man.png';
   import woman from './assets/images/woman.png';
-  import { Link } from 'react-router-dom';
+  import { useNavigate } from 'react-router-dom';
+
   
   function DashBoard() {
-  
+    const history = useNavigate();
       function myFunction() {
         let value = document.getElementById("select-menu").value;
             switch(value) {
             case "dashboard":
-                document.location.href = 'http://localhost:3000/lims-database';
+                history('/lims-database/');
                 break;
             case "tissue-culture":
-                document.location.href = 'http://localhost:3000/lims-database/tissue-culture/';
+                history('/lims-database/tissue-culture');
                 break;
             case "stem-cells": 
-                document.location.href = 'http://localhost:3000/lims-database/stem-cells/';
+                history('/lims-database/stem-cells');
                 break;
             case "fpq-log": 
-                document.location.href = 'http://localhost:3000/lims-database/fpq-log/';
+                history('/lims-database/fpq-log');
                 break;
             default: 
-            document.location.href = 'http://localhost:3000/lims-database';
+            history('/lims-database/');
         }
         
     }

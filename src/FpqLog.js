@@ -23,7 +23,7 @@ function FpqLog() {
                 <div class="ld-sidenav-navitem ld-typo--cap-m">Support</div>
                 <hr />
                 <div class="ld-sidenav-navitem ld-typo--cap-m">Create Cell Definition</div>
-                <a class="back-home ld-sidenav-navitem ld-typo--cap-m" href="http://localhost:3000/lims-database">Dashboard</a>
+                <a class="back-home ld-sidenav-navitem ld-typo--cap-m" href="/lims-database">Dashboard</a>
             </div>
         </div>
     );
