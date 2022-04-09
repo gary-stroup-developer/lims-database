@@ -22,6 +22,11 @@
     margin: 0.5em auto 1em;
     text-align: center;
 }
+
+.database-features {
+    margin-bottom: 2rem;
+}
+
 .ld-sidenav-navitem:not(:first-child) {
     margin-top: 2rem;
     max-width: 150px;

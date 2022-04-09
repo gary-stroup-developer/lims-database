@@ -1,5 +1,5 @@
   import './DashBoard.css';
-  import '@emdgroup-liquid/liquid/dist/css/liquid.global.css'
+
   import '@emdgroup-liquid/liquid/dist/css/ld-button.css'
   import '@emdgroup-liquid/liquid/dist/css/ld-header.css'
   import '@emdgroup-liquid/liquid/dist/css/ld-icon.css'
@@ -10,7 +10,6 @@
   import 'react-circular-progressbar/dist/styles.css';
   import SelectMenu from './components/SelectMenu';
   import Graph from './components/Graph';
-
   import GridContainer from './components/GridContainer';
 
   
