@@ -9,11 +9,13 @@ import TissueCulture from "./TissueCulture";
 import StemCells from "./StemCells";
 import FpqLog from "./FpqLog";
 import DashBoard from "./Dashboard";
+import Header from "./components/Header";
 
 function App() {
 
   return (
     <Router>
+    <Header />
       <Routes>
         <Route path="/lims-database" element={<DashBoard />} />
         <Route path="/lims-database/tissue-culture" element={<TissueCulture />} />

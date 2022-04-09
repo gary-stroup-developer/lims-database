@@ -2,6 +2,13 @@
   background-color: var(--ld-thm-primary);
 }
 
+.graph {
+  margin: 1.5em auto;
+  text-align: center;
+}
+
+.custom-color { color: var(--ld-col-vm); }
+
 p {
   font-family: var(--ld-font-body);
 }

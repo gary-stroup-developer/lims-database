@@ -1,0 +1,48 @@
+.header {
+    display: flex;
+}
+
+.flex-box {
+    display: flex;
+}
+
+.form-section {
+    flex: 1;
+    padding: 0 1em;
+}
+
+.sidenav-container {
+    position: relative;
+    padding: 1.5em 1em;
+    width: 315px;
+    border-right: 2px solid black;
+}
+
+.department-title {
+    margin: 0.5em auto 1em;
+    text-align: center;
+}
+.ld-sidenav-navitem:not(:first-child) {
+    margin-top: 2rem;
+    max-width: 150px;
+}
+
+hr {
+    position: relative;
+    max-width: 100%;
+    margin-top: 1rem;
+}
+
+.back-home {
+    display: block;
+    text-decoration: none;
+    color: #333;
+    margin-top: 2rem;
+    border: none;
+}
+
+.ld-sidenav-navitem:not(:first-child):hover {
+    opacity: 0.7;
+    
+}
+
