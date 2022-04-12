@@ -12,12 +12,9 @@ function JobForm() {
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-    function openModal() {
-        const handleShow = () => setShow(true);
-      }
       
     return (
-        <Form>
+            <Form>
             <Form.Group className="mb-3" controlId="formBasicEmail">
                 <Form.Label>Requestor</Form.Label>
                 <Form.Control type="text" placeholder="Gary Stroup" />

@@ -1,0 +1,14 @@
+.DatabaseDisplay-container .form-section {
+    position: relative;
+}
+.modal-body {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 800px;
+    flex: 1;
+}
+.cellLine-def {
+    display: block;
+    width: 100%;
+}
