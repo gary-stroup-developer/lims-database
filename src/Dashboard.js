@@ -31,8 +31,8 @@
           const stemcellsResponse = await axios.get('/server/stemcells/completedjobscount');
           const tissuecultureResponse = await axios.get('/server/tissueculture/completedjobscount');
 
-          const scComplete = stemcellsResponse.data.completedjobs;
-          const tcComplete = tissuecultureResponse.data.completedjobs;
+          const {scComplete} = stemcellsResponse.data;
+          const {tcComplete} = tissuecultureResponse.data;
 
           setTotalJobsComplete(scComplete + tcComplete);
         }catch(err){
@@ -48,11 +48,13 @@
           const stemcells = await axios.get('/server/stemcells/activejobs');
           const tissueculture = await axios.get('/server/tissueculture/activejobs');
 
-          const scLateJobs = stemcells.data.filter((job) => job.due_date < new Date(Date.now()));
-          const tcLateJobs = tissueculture.data.filter((job) => job.due_date < new Date(Date.now()));
+          const {scActiveJobs} = stemcells.data;
+          const{tcActiveJobs} = tissueculture.data;
+          const scLateJobs = scActiveJobs.filter((job) => Date(job.date_needed).getTime() < Date(Date.now()).getTime());
+          const tcLateJobs = tcActiveJobs.filter((job) => Date(job.date_needed).getTime() < Date(Date.now()).getTime());
 
-          setLateJobsSC(scLateJobs);
-          setLateJobsTC(tcLateJobs);
+          setLateJobsSC(scLateJobs.length);
+          setLateJobsTC(tcLateJobs.length);
         }catch(err) {
           setLateJobsSC(0);
           setLateJobsTC(0);

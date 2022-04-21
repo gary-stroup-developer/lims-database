@@ -6,9 +6,9 @@ const getCompletedTCJobsCountRoute = {
     handler: async (req,res) => {
         const db = getDbConnection('temecula-lims-db');
 
-        const completedjobs = await db.collection('tissue culture').find({"status":"complete"}).count();
+        const tcComplete = await db.collection('tissue culture').countDocuments({"status":"complete"});
 
-        res.status(200).json({completedjobs});
+        res.status(200).json({tcComplete});
     }
 };
 

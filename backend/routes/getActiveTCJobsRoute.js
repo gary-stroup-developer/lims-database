@@ -6,9 +6,9 @@ const getActiveTCJobsRoute = {
     handler: async (req,res) => {
         const db = getDbConnection('temecula-lims-db');
 
-        const activeJobs = await db.collection('tissue culture').find({"status":"active"});
+        const tcActiveJobs = await db.collection('tissue culture').find({"status":"active"});
 
-        res.status(200).json({activeJobs});
+        res.status(200).json({tcActiveJobs});
     }
 };
 

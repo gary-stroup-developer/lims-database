@@ -6,8 +6,8 @@ const getCompletedSCJobsCountRoute = {
     handler: async (req,res) => {
         const db = getDbConnection('temecula-lims-db');
 
-        const completedjobs = await db.collection('stem cells').find({"status":"complete"}).count();
-        res.status(200).json({completedjobs});
+        const scComplete = await db.collection('stem cells').countDocuments({"status":"complete"});
+        res.status(200).json({scComplete});
     }
 };
 
