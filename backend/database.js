@@ -6,12 +6,16 @@ const url = 'mongodb://localhost:27017';
 let client;
 
 const CreateConnection = async ()=> {
-// Use connect method to connect to the server
-  client = await MongoClient.connect(url,{
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-  });
-  console.log('Connected successfully to server');
+    try {
+    // Use connect method to connect to the server
+    client = await MongoClient.connect(url,{
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+    });
+    
+    } finally {
+        await client.close();
+    }
 }
 
 const getDbConnection = dbName => {

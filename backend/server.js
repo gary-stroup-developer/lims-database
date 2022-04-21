@@ -1,13 +1,15 @@
 const express = require('express');
 const {CreateConnection} = require('./database');
+const {routes} = require('./routes/index');
 
 const PORT = process.env.PORT || 8080;
 const app = express();
 
+
 app.use(express.json());
 
-app.get('/server',(req,res)=> {
-    res.send('Server running')
+routes.forEach((route) => {
+    app[route.method](route.path,route.handler);
 });
 
 CreateConnection().then(()=> {
