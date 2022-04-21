@@ -5,7 +5,7 @@ const getCompletedTCJobsRoute = {
     method: 'get',
     handler: async (req,res) => {
         const db = getDbConnection('temecula-lims-db');
-        const complete = db.collection('tissue culture').find({"status":"complete"});
+        const complete = await db.collection('tissue culture').find({"status":"complete"});
 
         res.status(200).json({complete});
     }

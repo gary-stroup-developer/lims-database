@@ -5,7 +5,7 @@ const getCompletedSCJobsRoute = {
     method: 'get',
     handler: async (req,res) => {
         const db = getDbConnection('temecula-lims-db');
-        const complete = db.collection('stem cells').find({"status":"complete"});
+        const complete = await db.collection('stem cells').find({"status":"complete"});
 
         res.status(200).json({complete});
     }
