@@ -6,7 +6,7 @@ const getActiveSCJobsRoute = {
     handler: async (req,res) => {
         const db = getDbConnection('temecula-lims-db');
 
-        const activeJobs = await db.collection('stemcells').find({"status":"active"},{"job_id":1,"description":1,"user":1});
+        const activeJobs = await db.collection('stem cells').find({"status":"active"});
 
         res.status(200).json({activeJobs});
     }
