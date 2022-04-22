@@ -5,9 +5,14 @@ const getCompletedTCJobsRoute = {
     method: 'get',
     handler: async (req,res) => {
         const db = getDbConnection('temecula-lims-db');
-        const complete = await db.collection('tissue culture').find({"status":"complete"});
 
-        res.status(200).json({complete});
+        let tcCompleteTotal = [];
+
+        const completeTotal = await db.collection('tissue culture').find({"status":"complete"});
+        const tcComplete = await db.collection('tissue culture').countDocuments({"status":"complete"});
+
+        await completeTotal.forEach(doc=>tcCompleteTotal.push(doc));
+        res.status(200).json({tcCompleteTotal,tcComplete});
     }
 };
 

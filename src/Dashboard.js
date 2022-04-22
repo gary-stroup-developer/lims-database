@@ -28,11 +28,11 @@
     useEffect(() => {
       const totalJobs = async () => {
         try {
-          const stemcellsResponse = await axios.get('/server/stemcells/completedjobscount');
-          const tissuecultureResponse = await axios.get('/server/tissueculture/completedjobscount');
+          const stemcellsResponse = await axios.get('/server/stemcells/complete-jobs');
+          const tissuecultureResponse = await axios.get('/server/tissueculture/complete-jobs');
 
-          const {scComplete} = stemcellsResponse.data;
-          const {tcComplete} = tissuecultureResponse.data;
+          const {scCompleteTotal, scComplete} = stemcellsResponse.data;
+          const {tcCompleteTotal,tcComplete} = tissuecultureResponse.data;
 
           setTotalJobsComplete(scComplete + tcComplete);
         }catch(err){
@@ -49,9 +49,12 @@
           const tissueculture = await axios.get('/server/tissueculture/activejobs');
 
           const {scActiveJobs} = stemcells.data;
-          const{tcActiveJobs} = tissueculture.data;
-          const scLateJobs = scActiveJobs.filter((job) => Date(job.date_needed).getTime() < Date(Date.now()).getTime());
-          const tcLateJobs = tcActiveJobs.filter((job) => Date(job.date_needed).getTime() < Date(Date.now()).getTime());
+          const {tcActiveJobs} = tissueculture.data;
+          
+
+          const scLateJobs = scActiveJobs.filter((job) => new Date(job.date_needed).getTime() < new Date(Date.now()).getTime());
+          const tcLateJobs = tcActiveJobs.filter((job) => new Date(job.date_needed).getTime() < new Date(Date.now()).getTime());
+
 
           setLateJobsSC(scLateJobs.length);
           setLateJobsTC(tcLateJobs.length);
