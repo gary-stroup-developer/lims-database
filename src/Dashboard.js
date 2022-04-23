@@ -13,7 +13,6 @@
   import Graph from './components/Graph';
   import GridContainer from './components/GridContainer';
 
-
   
   function DashBoard() {
     const history = useNavigate();
@@ -23,6 +22,7 @@
     const [totalJobsComplete, setTotalJobsComplete] = useState(0);
     const [lateJobsSC, setLateJobsSC] = useState(0);
     const [lateJobsTC, setLateJobsTC] = useState(0);
+    const [totalCapacity, setTotalCapacity] = useState(0);
 
 
     useEffect(() => {
@@ -31,8 +31,8 @@
           const stemcellsResponse = await axios.get('/server/stemcells/complete-jobs');
           const tissuecultureResponse = await axios.get('/server/tissueculture/complete-jobs');
 
-          const {scCompleteTotal, scComplete} = stemcellsResponse.data;
-          const {tcCompleteTotal,tcComplete} = tissuecultureResponse.data;
+          const {scComplete} = stemcellsResponse.data;
+          const {tcComplete} = tissuecultureResponse.data;
 
           setTotalJobsComplete(scComplete + tcComplete);
         }catch(err){
@@ -48,16 +48,17 @@
           const stemcells = await axios.get('/server/stemcells/activejobs');
           const tissueculture = await axios.get('/server/tissueculture/activejobs');
 
-          const {scActiveJobs} = stemcells.data;
-          const {tcActiveJobs} = tissueculture.data;
+          const {totalSCCapacity,scActiveJobs,sc_indiv_capacity} = stemcells.data;
+          const {totalTCCapacity,tcActiveJobs,tc_indiv_capacity} = tissueculture.data;
           
 
           const scLateJobs = scActiveJobs.filter((job) => new Date(job.date_needed).getTime() < new Date(Date.now()).getTime());
           const tcLateJobs = tcActiveJobs.filter((job) => new Date(job.date_needed).getTime() < new Date(Date.now()).getTime());
 
-
           setLateJobsSC(scLateJobs.length);
           setLateJobsTC(tcLateJobs.length);
+
+          setTotalCapacity(Number(totalSCCapacity)*22 + Number(totalTCCapacity));
         }catch(err) {
           setLateJobsSC(0);
           setLateJobsTC(0);
@@ -65,7 +66,7 @@
       }
 
       lateJobs();
-    },[]);
+    },[setTotalCapacity]);
     
     
       function myFunction() {
@@ -95,7 +96,7 @@
 
       <div className="container">
           <SelectMenu select={myFunction}/>
-          <Graph />
+          <Graph capacity={totalCapacity}/>
           <div>
             <p>Jobs Complete for {year}: {totalJobsComplete}</p>
             <p>Late Jobs: {lateJobsSC + lateJobsTC}</p>
