@@ -1,6 +1,6 @@
 const {getDbConnection} = require('../database');
 
-const getSCJobsInQueueRoute = {
+const getCCJobsInQueueRoute = {
     path: '/server/queue',
     method: 'get',
     handler: async (req,res) => {
@@ -11,4 +11,4 @@ const getSCJobsInQueueRoute = {
     }
 };
 
-exports.getSCJobsInQueueRoute = getSCJobsInQueueRoute;
+exports.getCCJobsInQueueRoute = getCCJobsInQueueRoute;

@@ -2,16 +2,16 @@ const {getFPQ} = require('./getFPQ');
 const {getCapacityRoute} = require('./getCapacityRoute');
 const {getActiveCCJobsRoute} = require('./getActiveCCJobsRoute');
 const {getCompletedCCJobsRoute} = require('./getCompletedCCJobsRoute');
-const {getSCJobsInQueueRoute} = require('./getSCJobsInQueueRoute');
-const {getTCJobsInQueueRoute} = require('./getTCJobsInQueueRoute');
+const {getCCJobsInQueueRoute} = require('./getCCJobsInQueueRoute');
+const {getCellLineInfoRoute} = require('./getCellLineInfoRoute');
 
 const routes = [
     getFPQ,
     getCapacityRoute,
     getActiveCCJobsRoute,
     getCompletedCCJobsRoute,
-    getSCJobsInQueueRoute,
-    getTCJobsInQueueRoute
+    getCCJobsInQueueRoute,
+    getCellLineInfoRoute
 ]
 
 exports.routes = routes;

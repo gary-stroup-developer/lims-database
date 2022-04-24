@@ -1,10 +1,10 @@
-import React from "react";
+import React, {useState} from "react";
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import '@emdgroup-liquid/liquid/dist/components/ld-input';
 import '@emdgroup-liquid/liquid/dist/components/ld-label';
 import Modal from 'react-bootstrap/Modal'
-import {useState} from "react";
+import axios from "axios";
 import '@emdgroup-liquid/liquid/dist/components/ld-icon';
 
 
@@ -16,6 +16,7 @@ function JobForm() {
         requestor: '',
         department: '',
         date_needed: '',
+        cell_line_pn: '',
         cell_line: '',
         description: '',
         quantity: 0,
@@ -28,6 +29,21 @@ function JobForm() {
         setValue((prevState)=>({
             ...prevState,
             [name] : value
+        }));
+     };
+
+     const handleFindCellLineInfo = () => {
+        const response = axios.get(`/server/cell-line-info/${value.cell_line_pn}`);
+        const {cell_line_info} = response.data;
+        
+        const {cell_line, cell_line_pn ,description,assembly_number} = cell_line_info;
+        
+        setValue((prevState) => ({
+            ...prevState,
+            cell_line,
+            cell_line_pn,
+            description,
+            assembly_number
         }));
      };
 
@@ -61,16 +77,23 @@ function JobForm() {
                 </div>
 
             
-                <Modal show={show} onHide={handleClose}>
+                <Modal className="modal-dialog modal-dialog-centered" show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
                     <Modal.Title>Cell Culture Cell Lines</Modal.Title>
                 </Modal.Header>
-                <Modal.Body><ld-input placeholder="Search" type="search"></ld-input></Modal.Body>
+                <Modal.Body className="row">
+                    <Form>
+                        <Form.Group>
+                            <Form.Label>Cell Line Part Number</Form.Label>
+                            <Form.Control type="text" name="cell_line_pn" value={value.cell_line_pn} onChange={handleChange} />
+                        </Form.Group>
+                    </Form>
+                </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>
                     Close
                     </Button>
-                    <Button variant="primary" onClick={handleClose}>
+                    <Button variant="primary" onSubmit={handleFindCellLineInfo}>
                         Submit
                     </Button>
                 </Modal.Footer>
@@ -80,12 +103,12 @@ function JobForm() {
 
             <Form.Group className="mb-3" controlId="formBasicPassword">
                 <Form.Label>Cell Line</Form.Label>
-                <Form.Control type="text" name="cell_line" value={value.cell_line} onChange={handleChange} />
+                <Form.Control type="text" name="cell_line" value={value.cell_line} onChange={handleChange}/>
             </Form.Group>
   
             <Form.Group className="mb-3" controlId="formBasicEmail">
                 <Form.Label>Description</Form.Label>
-                <Form.Control type="text" name="description" value={value.description} onChange={handleChange}/>
+                <Form.Control type="text" name="description" value={value.description} onChange={handleChange}  />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicEmail">
                 <Form.Label>Quantity</Form.Label>
