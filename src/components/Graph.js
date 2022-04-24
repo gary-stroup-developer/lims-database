@@ -1,8 +1,9 @@
 import React from "react";
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 
-function Graph({capacity}) {
-    let value = capacity;
+function Graph({individual,capacity}) {
+
+  let value = (capacity/Math.floor(6.5*individual))*100;
     return (
         <div className='graph'>
         <h1>Total Capacity</h1>
@@ -12,7 +13,7 @@ function Graph({capacity}) {
             text={`${value}%`} 
             styles={buildStyles({
               // Colors
-              pathColor: `rgba(60, 34, 116, ${value / 100})`,
+              pathColor: `rgba(60, 34, 116, ${value})`,
               trailColor: '#d6d6d6',
               textColor: 'rgb(235, 60, 150)',
               textSize: '1.8rem',

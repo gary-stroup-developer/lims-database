@@ -23,18 +23,16 @@
     const [lateJobsSC, setLateJobsSC] = useState(0);
     const [lateJobsTC, setLateJobsTC] = useState(0);
     const [totalCapacity, setTotalCapacity] = useState(0);
-
+    const [indivCapacity, setIndivCapacity] = useState([]);
 
     useEffect(() => {
       const totalJobs = async () => {
         try {
-          const stemcellsResponse = await axios.get('/server/stemcells/complete-jobs');
-          const tissuecultureResponse = await axios.get('/server/tissueculture/complete-jobs');
+          const cellCultureResponse = await axios.get('/server/cellculture/complete-jobs');
 
-          const {scComplete} = stemcellsResponse.data;
-          const {tcComplete} = tissuecultureResponse.data;
+          const {ccCompleteTotal, ccComplete} = cellCultureResponse.data;
 
-          setTotalJobsComplete(scComplete + tcComplete);
+          setTotalJobsComplete(ccComplete);
         }catch(err){
           setTotalJobsComplete(0);
         }
@@ -45,20 +43,22 @@
     useEffect(() => {
       const lateJobs = async() => {
         try{
-          const stemcells = await axios.get('/server/stemcells/activejobs');
-          const tissueculture = await axios.get('/server/tissueculture/activejobs');
+          const cell_culture_capacity = await axios.get('/server/capacity');
+          const cell_culture_active_jobs = await axios.get('/server/cellculture/activejobs');
 
-          const {totalSCCapacity,scActiveJobs,sc_indiv_capacity} = stemcells.data;
-          const {totalTCCapacity,tcActiveJobs,tc_indiv_capacity} = tissueculture.data;
+          const {totalCCapacity, cc_indiv_capacity} = cell_culture_capacity.data;
+          const {ccActiveJobs} = cell_culture_active_jobs.data;
           
 
-          const scLateJobs = scActiveJobs.filter((job) => new Date(job.date_needed).getTime() < new Date(Date.now()).getTime());
-          const tcLateJobs = tcActiveJobs.filter((job) => new Date(job.date_needed).getTime() < new Date(Date.now()).getTime());
+          const scLateJobs = ccActiveJobs.filter((job) => new Date(job.date_needed).getTime() < new Date(Date.now()).getTime());
+          const tcLateJobs = ccActiveJobs.filter((job) => new Date(job.date_needed).getTime() < new Date(Date.now()).getTime());
 
           setLateJobsSC(scLateJobs.length);
           setLateJobsTC(tcLateJobs.length);
 
-          setTotalCapacity(Number(totalSCCapacity)*22 + Number(totalTCCapacity));
+          setTotalCapacity(totalCCapacity);
+          setIndivCapacity((arr) => arr.concat(cc_indiv_capacity))
+          
         }catch(err) {
           setLateJobsSC(0);
           setLateJobsTC(0);
@@ -66,7 +66,7 @@
       }
 
       lateJobs();
-    },[setTotalCapacity]);
+    },[]);
     
     
       function myFunction() {
@@ -96,12 +96,12 @@
 
       <div className="container">
           <SelectMenu select={myFunction}/>
-          <Graph capacity={totalCapacity}/>
+          <Graph individual ={indivCapacity.length} capacity={totalCapacity}/>
           <div>
             <p>Jobs Complete for {year}: {totalJobsComplete}</p>
             <p>Late Jobs: {lateJobsSC + lateJobsTC}</p>
           </div>
-          <GridContainer />
+          <GridContainer metrics={indivCapacity}/>
   
       </div>
     </main>
