@@ -1,8 +1,26 @@
-import React from "react";
-import {data} from '../assets/data/data';
+import React, {useEffect, useState} from "react";
+import axios from "axios";
+
 import '../JobList.css'
 
 export default function ActiveJobList() {
+    const [data, setData] = useState([]);
+
+    useEffect(() => {
+        const getJobsActive = async () => {
+            try {
+                const response = await axios.get('/server/cellculture/activejobs');
+                const {ccActiveJobs} = response.data;
+            
+                setData((arr) => [...arr,...ccActiveJobs]); 
+                
+                
+            } catch(err){
+                console.log(err);
+            }
+        }
+        getJobsActive();
+    },[setData]);
 
     return (
         <div>
@@ -10,10 +28,10 @@ export default function ActiveJobList() {
         {data.map((data,index) => (
             <table>
             <thead>
-                <tr key={index*1000}><th>{data.employee}</th></tr>
+                <tr key={index*1000}><th>{data.requestor}</th></tr>
             </thead>
             <tbody>
-                {data.jobs.map(job => <tr key={index*75}><td>{job.job_id}</td><td>{job.job_description}</td></tr>)}
+                <tr key={index*75}><td>{data._id}</td><td>{data.description}</td></tr>
             </tbody>
                 
             </table>

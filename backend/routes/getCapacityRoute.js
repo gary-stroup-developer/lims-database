@@ -23,7 +23,6 @@ const getCapacityRoute = {
         await indiv_capacity.forEach(doc => cc_indiv_capacity.push({name:doc._id,individualCapacity: doc.individualCapacity}));
         ccActiveJobs.forEach(doc => totalCCapacity += doc.weight);
 
-       console.log(cc_indiv_capacity)
         
         res.status(200).json({totalCCapacity, cc_indiv_capacity});
     }
