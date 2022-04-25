@@ -10,9 +10,9 @@ useEffect(() => {
     const getJobsInQueue = async () => {
         try {
             const response = await axios.get('/server/queue');
-            const {queue} = response.data;
-            if(queue.length > 0) {
-               setData((arr) => [...arr,...queue]); 
+            const {jobsInQueue} = response.data;
+            if(jobsInQueue.length > 0) {
+               setData(() => jobsInQueue.map(doc => doc)); 
             } else {
                 setData([{
                     requestor: 'None',
@@ -26,7 +26,7 @@ useEffect(() => {
         }
     }
     getJobsInQueue();
-},[setData]);
+},[]);
 
     return (
         <div>
